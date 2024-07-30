@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {     // Espera a que el contenido del DOM esté completamente cargado antes de ejecutar el script.
     const searchInput = document.getElementById('search');
     const suggestions = document.getElementById('suggestions');
     const product1 = document.getElementById('product1');
@@ -8,8 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = document.getElementById('result');
     const showInfoBtn = document.getElementById('show-info-btn');
     const infoModal = document.getElementById('info-modal');
+ // Obtiene referencias a los elementos del DOM necesarios para la funcionalidad de la página.
 
-    const productos = [
+
+    const productos = [         // Lista de productos con ID, nombre y tipo.
         { id: 1, nombre: 'Metalaxil + Propamocarb', tipo: 'Fungicida' },
         { id: 2, nombre: 'Tebuconazol', tipo: 'Fungicida' },
         { id: 3, nombre: 'Dimetimorph', tipo: 'Fungicida' },
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ];
 
-    const compatibilidades = [
+    const compatibilidades = [         // Lista de compatibilidades entre productos.
         { producto1: 1, producto2: 7, compatible: true },
         { producto1: 1, producto2: 8, compatible: true },
         { producto1: 1, producto2: 9, compatible: true },
@@ -58,8 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ];
 
-    const informacionProductos = {
-        
+    const informacionProductos = {         // Información detallada sobre productos específicos.
         10: {
             tipo: 'Insecticida',
             ingredienteActivo: 'Imidacloprid',
@@ -118,19 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    function showSuggestions(input) {
-        suggestions.innerHTML = '';
-        if (input.length === 0) return;
+    function showSuggestions(input) {         // Función para mostrar sugerencias de productos basadas en la entrada del usuario.
+        suggestions.innerHTML = ''; // Limpia las sugerencias anteriores.
+        if (input.length === 0) return; // Si la entrada está vacía, no se muestra ninguna sugerencia.
 
         const filteredProducts = productos.filter(producto => 
             producto.nombre.toLowerCase().includes(input.toLowerCase())
         );
+        // Filtra los productos que contienen el texto ingresado en su nombre.
 
-        filteredProducts.forEach(producto => {
+
+        filteredProducts.forEach(producto => {             // Para cada producto filtrado, crea un elemento de sugerencia.
             const div = document.createElement('div');
             div.classList.add('suggestion');
             div.innerText = producto.nombre;
-            div.addEventListener('click', () => {
+            div.addEventListener('click', () => {                 // Al hacer clic en una sugerencia, se asigna el producto a uno de los campos de comparación.
                 if (!product1.dataset.id) {
                     product1.innerText = producto.nombre;
                     product1.dataset.id = producto.id;
@@ -140,24 +143,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     alert('No se pueden seleccionar productos del mismo tipo o ya seleccionados.');
                 }
-                suggestions.innerHTML = '';
-                searchInput.value = '';
+                suggestions.innerHTML = ''; // Limpia las sugerencias después de seleccionar un producto.
+                searchInput.value = ''; // Limpia el campo de búsqueda.
             });
             suggestions.appendChild(div);
         });
     }
 
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', (e) => {         // Detecta cambios en el campo de búsqueda y muestra las sugerencias correspondientes.
         showSuggestions(e.target.value);
     });
 
-    compareBtn.addEventListener('click', () => {
+    compareBtn.addEventListener('click', () => {         // Maneja la acción del botón de comparación.
         const productId1 = parseInt(product1.dataset.id);
         const productId2 = parseInt(product2.dataset.id);
 
         if (!productId1 || !productId2) {
             alert('Por favor, seleccione dos productos para comparar.');
-            return;
+            return; // Asegura que se hayan seleccionado dos productos antes de continuar.
         }
 
         const producto1 = productos.find(p => p.id === productId1);
@@ -165,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (producto1.tipo === producto2.tipo) {
             alert('No se pueden comparar productos del mismo tipo.');
-            product2.innerText = 'Producto 2';
+            product2.innerText = 'Producto 2'; // Restablece el segundo producto si son del mismo tipo.
             delete product2.dataset.id;
             return;
         }
@@ -175,12 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
             (c.producto1 === productId2 && c.producto2 === productId1)
         );
 
+      // Verifica la compatibilidad entre los dos productos seleccionados.
+
+
         result.innerText = compatible ? 'Compatibles' : 'Incompatibles';
-        result.style.display = 'block';
-        showInfoBtn.style.display = 'block';
+        result.style.display = 'block'; // Muestra el resultado de la comparación.
+        showInfoBtn.style.display = 'block'; // Muestra el botón de información adicional.
     });
 
-    showInfoBtn.addEventListener('click', () => {
+    showInfoBtn.addEventListener('click', () => { // Maneja la acción del botón de información adicional.
     const productId1 = parseInt(product1.dataset.id);
     const productId2 = parseInt(product2.dataset.id);
 
@@ -249,28 +255,28 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-
-        document.querySelector('#info-modal .modal-content').innerHTML = `
+      // Inserta el contenido generado en el modal de información.
+        document.querySelector('#info-modal .modal-content').innerHTML = ` 
             <span class="close">&times;</span>
             ${content}
         `;
 
-        infoModal.style.display = 'block';
+        infoModal.style.display = 'block'; // Muestra el modal.
 
-        document.querySelector('#info-modal .close').addEventListener('click', () => {
+        document.querySelector('#info-modal .close').addEventListener('click', () => {             // Maneja el cierre del modal.
             infoModal.style.display = 'none';
-            location.reload();
+            location.reload(); // Recarga la página al cerrar el modal.
         });
     });
 
-    refreshBtn.addEventListener('click', () => {
-        location.reload();
+    refreshBtn.addEventListener('click', () => {         // Maneja la acción del botón de recarga.
+        location.reload(); // Recarga la página.
     });
 
-    window.addEventListener('click', (event) => {
-        if (event.target === infoModal) {
-            infoModal.style.display = 'none';
-            location.reload();
+    window.addEventListener('click', (event) => {          // Cierra el modal si se hace clic fuera del mismo.
+        if (event.target === infoModal) {  // Verifica si el elemento que fue clickeado es el modal (es decir, si el clic ocurrió fuera del contenido del modal).
+            infoModal.style.display = 'none'; // Oculta el modal cambiando su estilo de visualización a 'none'.
+            location.reload(); // Recarga la página para limpiar cualquier estado o datos temporales.
         }
     });
 });
