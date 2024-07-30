@@ -40,7 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { producto1: 3, producto2: 8, compatible: true },
         { producto1: 3, producto2: 9, compatible: true },
         { producto1: 3, producto2: 10, compatible: true },
-        { producto1: 3, producto2: 11, compatible: true }
+        { producto1: 3, producto2: 11, compatible: true },
+        { producto1: 4, producto2: 7, compatible: true },
+        { producto1: 4, producto2: 8, compatible: true },
+        { producto1: 4, producto2: 9, compatible: true },
+        { producto1: 4, producto2: 10, compatible: true },
+        { producto1: 4, producto2: 11, compatible: true },
+        { producto1: 5, producto2: 7, compatible: true },
+        { producto1: 5, producto2: 8, compatible: true },
+        { producto1: 5, producto2: 9, compatible: true },
+        { producto1: 5, producto2: 10, compatible: true },
+        { producto1: 5, producto2: 11, compatible: true },
+        { producto1: 6, producto2: 7, compatible: true },
+        { producto1: 6, producto2: 8, compatible: true },
+        { producto1: 6, producto2: 9, compatible: true },
+        { producto1: 6, producto2: 10, compatible: true },
+        { producto1: 6, producto2: 11, compatible: true },
     ];
 
     let selectedProducts = [];
