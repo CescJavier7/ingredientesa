@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const compareBtn = document.getElementById('compare-btn');
     const refreshBtn = document.getElementById('refresh-btn');
     const result = document.getElementById('result');
+    const detailsBtn = document.getElementById('details-btn');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('close-btn');
+    const productDetails = document.getElementById('product-details');
 
     const productos = [
         { id: 1, nombre: 'Metalaxil + Propamocarb', tipo: 'Fungicida' },
@@ -81,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 (c.producto1 === selectedProducts[1].id && c.producto2 === selectedProducts[0].id)
             );
             result.textContent = compatible ? 'Son compatibles' : 'No son compatibles';
+            detailsBtn.style.display = 'inline-block'; // Mostrar botón de detalles
         } else {
             alert('Selecciona dos productos para comparar');
         }
@@ -88,5 +93,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     refreshBtn.addEventListener('click', () => {
         window.location.reload();
+    });
+
+    detailsBtn.addEventListener('click', () => {
+        if (selectedProducts.length === 2) {
+            const detailsHtml = selectedProducts.map(p => `
+                <p>Nombre: ${p.nombre}</p>
+                <p>Tipo: ${p.tipo}</p>
+                <p>Código: ${p.id}</p>
+            `).join('<hr>');
+            productDetails.innerHTML = detailsHtml;
+            modal.style.display = 'block';
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 });
